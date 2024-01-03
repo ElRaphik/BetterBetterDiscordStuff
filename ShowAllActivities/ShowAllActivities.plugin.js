@@ -309,9 +309,9 @@ const [UserActivity, UserActivityTypes] = (() => {
 const classes = Webpack$1.getByProps("activity", "buttonColor") ?? {};
 
 function ActivityWrapper({ user, activityType: ActivityType = UserActivity, whatever: WhateverWrapper, ...props }) {
-    const activities = useStateFromStoresArray([PresenceStore], () => {
+    const activities = useMemo(() => {
         return PresenceStore.getActivities(user.id).filter((ac) => ac.type !== 4);
-    });
+    }, [PresenceStore, user]);
     const [activityIndex, setActivityIndex] = useState(0);
     const currentActivity = useMemo(() => activities[activityIndex], [activityIndex, activities]);
     const shouldShowControls = useStateFromStores([Settings], () => {
